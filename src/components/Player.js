@@ -11,7 +11,9 @@ const Player = ({ spotify }) => {
         <Sidebar />
         <Body />
       </div>
-      <Footer />
+      <div className="player__footer">
+        <Footer />
+      </div>
     </div>
   );
 };
