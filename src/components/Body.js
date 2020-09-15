@@ -1,5 +1,14 @@
 import React from "react";
 import "../css/Body.css";
+// import {
+//   Home,
+//   Favorite,
+//   FavoriteBorder,
+//   MoreHoriz,
+//   PlayCircleFilled,
+//   Search,
+//   LibraryMusic,
+// } from "@material-ui/icons";
 
 const Body = () => {
   return (
