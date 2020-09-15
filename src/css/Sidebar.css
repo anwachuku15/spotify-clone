@@ -3,14 +3,31 @@
   height: 100vh;
   flex: 0.05;
   color: white;
-  height: 100vh;
   background-color: #040404;
   min-width: 210px;
   padding-top: 12px;
   padding-left: 10px;
   padding-right: 10px;
+  /* display: flex; */
+  /* flex-direction: column; */
 }
-.sidebar > hr {
+
+/* .navigation {
+  min-height: 200px;
+  margin-bottom: 20px;
+} */
+
+.playlistsContainer {
+  overflow: scroll;
+}
+
+/* .play_list {
+  overflow: scroll;
+  border-color: #fe0000;
+  border-width: 20px;
+} */
+
+hr {
   border: 1px solid #282828;
   width: 90%;
   margin: 10px auto;

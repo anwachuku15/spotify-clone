@@ -1,0 +1,9 @@
+.playlists {
+  /* margin-top: 10px; */
+  position: fixed;
+  bottom: 120px;
+  top: 260px;
+  width: 210px;
+  overflow-y: scroll;
+  /* height: 200px; */
+}

@@ -16,3 +16,8 @@
 .sidebarOption__icon {
   margin-right: 16px;
 }
+
+.optionText {
+  font-size: 13px;
+  /* margin-top: ; */
+}

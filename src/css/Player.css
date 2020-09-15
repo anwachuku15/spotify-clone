@@ -1,7 +1,18 @@
 .player {
   flex-direction: column;
+  height: 100vh;
 }
 
 .player__body {
   display: flex;
+  /* padding-bottom: 60px; */
+}
+
+.player__footer {
+  position: fixed;
+  bottom: 0;
+  height: 60px;
+  width: 100%;
+  background-color: #282828;
+  padding: 20px;
 }
