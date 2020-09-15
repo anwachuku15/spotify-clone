@@ -1,3 +1,7 @@
+import SpotifyWebApi from "spotify-web-api-js";
+
+export const spotify = new SpotifyWebApi();
+
 // Click LOGIN button
 // Redirect to Spotify login page
 export const authEndpoint = "https://accounts.spotify.com/authorize";
