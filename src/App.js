@@ -20,6 +20,7 @@ function App() {
     const _token = hash.access_token;
     if (_token) {
       // store token in context
+      console.log(_token);
       dispatch({
         type: "SET_TOKEN",
         token: _token,
@@ -29,14 +30,30 @@ function App() {
       spotify.setAccessToken(_token);
 
       // get User response then shoot it into the context (data layer)
-      spotify.getMe().then((user) => {
-        dispatch({
-          type: "SET_USER",
-          user: user,
-        });
-      });
+      spotify
+        .getMe()
+        .then((user) => {
+          dispatch({
+            type: "SET_USER",
+            user: user,
+          });
+        })
+        .catch((err) => console.log(err));
+
+      spotify
+        .getUserPlaylists({ limit: 50 })
+        .then((playlists) => {
+          console.log(playlists.limit);
+          dispatch({
+            type: "SET_PLAYLISTS",
+            playlists: playlists,
+          });
+        })
+        .catch((err) => console.log(err));
+
+      console.log(state);
     }
-  }, [dispatch]);
+  }, [dispatch, state]);
 
   return (
     <div className="app">
