@@ -6,8 +6,19 @@ RESPONSIVE WEB DESIGN
 
 MATERIAL UI (icons)
 
-REACT CONTEXT API
+**REACT CONTEXT API**
 
 REACT HOOKS, FUNCTIONAL (HOOKS, STATE)
 
 ENTIRE REACT TECH STACK
+
+DATA LAYER:
+    App
+    - Login
+    - Player
+        - Sidebar
+        - Header
+
+    Prop Drilling (passing data down through components)
+        - Tightly Coupled Code
+        - FIX: REDUX or React Context API
