@@ -5,8 +5,11 @@ import "../css/SidebarOption.css";
 const SidebarOption = ({ option, Icon }) => {
   return (
     <div className="sidebarOption">
-      <p>{option}</p>
+      {Icon && <Icon className="sidebarOption__icon" />}
+      {Icon ? <h5>{option}</h5> : <p>{option}</p>}
     </div>
+
+    // <hr />
   );
 };
 
