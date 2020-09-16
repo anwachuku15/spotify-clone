@@ -20,7 +20,7 @@ function App() {
     const _token = hash.access_token;
     if (_token) {
       // store token in context
-      console.log(_token);
+      // console.log(_token);
       dispatch({
         type: "SET_TOKEN",
         token: _token,
@@ -43,7 +43,6 @@ function App() {
       spotify
         .getUserPlaylists({ limit: 50 })
         .then((playlists) => {
-          console.log(playlists.limit);
           dispatch({
             type: "SET_PLAYLISTS",
             playlists: playlists,
@@ -51,7 +50,26 @@ function App() {
         })
         .catch((err) => console.log(err));
 
-      console.log(state);
+      spotify
+        .getMyCurrentPlaybackState()
+        .then((track) => {
+          dispatch({
+            type: "SET_CURRENT_PLAYBACK",
+            playback: {
+              song: track.item.name,
+              artists: track.item.artists,
+              cover: track.item.album.images[0].url,
+              volume: track.device.volume_percent,
+              isPlaying: track.is_playing,
+              duration: track.item.duration_ms,
+              progress: track.progress_ms,
+              repeat_state: track.repeat_state,
+              shuffle_state: track.shuffle_state,
+              uri: track.item.uri,
+            },
+          });
+        })
+        .catch((err) => console.log(err));
     }
   }, [dispatch, state]);
 
