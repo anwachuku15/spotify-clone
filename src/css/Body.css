@@ -3,5 +3,47 @@
   flex: 0.95;
   height: 100vh;
   color: white;
-  background: linear-gradient(rgb(91, 87, 115), rgba(0, 0, 0, 1));
+  background: linear-gradient(rgb(87, 115, 104), rgba(0, 0, 0, 1));
+}
+
+.playlistInfoContainer {
+  height: 280px;
+  display: flex;
+  align-items: flex-end;
+  padding: 10px;
+}
+
+.playlist_img {
+  object-fit: contain;
+  width: 232px;
+  height: 232px;
+  min-width: 192px;
+  margin-right: 20px;
+  /* height: 20vw; */
+  /* box-shadow: 0 4px 60px rgba(0, 0, 0, 0.3); */
+}
+
+.playlistInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.type {
+  font-size: 14px;
+}
+
+.playlistInfo > h2 {
+  font-size: 400%;
+  margin-bottom: 10px;
+  font-weight: 900;
+}
+
+.description {
+  font-size: 14px;
+}
+
+.owner {
+  font-size: 14px;
+  font-weight: 700;
 }
