@@ -1,8 +1,98 @@
 .footer {
-  /* position: fixed;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
   bottom: 0;
   height: 60px;
-  width: 100%;
+  width: 98%;
   background-color: #282828;
-  padding: 20px; */
+  padding: 20px;
+}
+
+.footer__left {
+  flex: 0.3;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+  width: 300px;
+}
+
+.songImg {
+  object-fit: contain;
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  min-height: 60px;
+  margin-right: 10px;
+}
+
+.songName {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.artist {
+  color: #b3b3b3;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.footer__center {
+  flex: 0.4;
+  padding: 0 100px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 300px;
+  /* min-width: 300px; */
+}
+
+.footer__right {
+  flex: 0.3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.footer__right * .MuiSlider-thumb {
+  background-color: white;
+  width: 13px;
+  height: 13px;
+}
+
+.footer__right * .MuiSlider-thumb.Mui-focusVisible,
+.footer__right * .MuiSlider-thumb:hover {
+  box-shadow: 0px 0px 0px 6px rgba(30, 209, 94, 0.16);
+}
+
+.footer__right * .MuiSlider-thumb.MuiSlider-active {
+  box-shadow: 0px 0px 0px 10px rgba(30, 209, 94, 0.16);
+}
+
+.footer__right * .MuiSlider-rail {
+  background-color: lightgray;
+  height: 4px;
+}
+
+.footer__right * .MuiSlider-track {
+  height: 4px;
+}
+
+.rightControls {
+  /* width: 100%; */
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.footer__green {
+  color: #1ed15e;
+}
+
+.footer__icon:hover,
+.footer__green:hover {
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1.2) !important;
 }
