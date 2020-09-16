@@ -7,6 +7,19 @@
   padding-right: 16px;
   cursor: pointer;
   transition: 100ms color ease-in;
+  white-space: nowrap;
+}
+
+.sidebarOptionActive {
+  display: flex;
+  color: #1db954;
+  height: 40px;
+  align-items: center;
+  padding-left: 16px;
+  padding-right: 16px;
+  cursor: pointer;
+  transition: 100ms color ease-in;
+  white-space: nowrap;
 }
 
 .sidebarOption:hover {
@@ -19,5 +32,6 @@
 
 .optionText {
   font-size: 13px;
+  text-overflow: ellipsis;
   /* margin-top: ; */
 }
