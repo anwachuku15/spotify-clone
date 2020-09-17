@@ -28,7 +28,8 @@ export const reducer = (state, action) => {
     case "SELECT_PLAYLIST":
       return {
         ...state,
-        selectedPlaylistId: action.playlistId,
+        playlistInfo: action.playlistInfo,
+        playlistTracks: action.playlistTracks,
       };
     case "SET_CURRENT_PLAYBACK":
       console.log(action.playback);
