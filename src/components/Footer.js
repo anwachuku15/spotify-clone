@@ -11,10 +11,9 @@ import {
 import { Grid, Slider } from "@material-ui/core";
 import { VolumeDown } from "@material-ui/icons";
 import { useStateValue } from "../StateProvider";
-import { spotify } from "../spotify";
 
 const Footer = () => {
-  const [state, dispatch] = useStateValue();
+  const [state] = useStateValue();
   const [volume, setVolume] = useState(0);
 
   useEffect(() => {
@@ -58,7 +57,9 @@ const Footer = () => {
           <img src={state.playback.cover} className="songImg" alt="" />
           <div className="footer__songInfo">
             <p className="songName">{state.playback && state.playback.song}</p>
-            <p className="artist">{state.playback.artists[0].name}</p>
+            <p className="artist">
+              {state.playback.artists.map((artist) => artist.name).join(", ")}
+            </p>
           </div>
         </div>
       ) : (
