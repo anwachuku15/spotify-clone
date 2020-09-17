@@ -1,16 +1,23 @@
 .body {
-  padding: 30px;
+  /* padding: 30px; */
   flex: 0.95;
   height: 100vh;
   color: white;
-  background: linear-gradient(rgb(87, 115, 104), rgba(0, 0, 0, 1));
+  /* background: linear-gradient(rgb(87, 115, 104), rgba(0, 0, 0, 1)); */
+  background: linear-gradient(rgb(55, 55, 55), rgba(0, 0, 0, 1));
+  overflow: scroll;
+  /* margin-bottom: 200px; */
+}
+
+.body::-webkit-scrollbar {
+  display: none;
 }
 
 .playlistInfoContainer {
   height: 280px;
   display: flex;
   align-items: flex-end;
-  padding: 10px;
+  padding: 40px;
 }
 
 .playlist_img {
@@ -27,6 +34,8 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .type {
@@ -37,13 +46,61 @@
   font-size: 400%;
   margin-bottom: 10px;
   font-weight: 900;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.playlistInfo > span {
+  display: flex;
+  margin-top: 5px;
 }
 
 .description {
   font-size: 14px;
+  color: lightgray;
+}
+
+.stats {
+  font-size: 14px;
+  color: lightgray;
+  margin-left: 3px;
 }
 
 .owner {
   font-size: 14px;
   font-weight: 700;
+}
+
+.playlist__tracks {
+  margin-bottom: 160px;
+  padding-left: 30px;
+}
+
+.playlist__icons {
+  color: #1ed15e;
+  padding: 20px 20px;
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
+.playlist__icons > .MuiSvgIcon-root {
+  margin-right: 20px;
+}
+
+.play {
+  font-size: 70px !important;
+}
+
+.play:hover {
+  transition: 100ms transform ease-in;
+  transform: scale(1.08);
+}
+
+.favorite {
+  /* font-size: 70px !important; */
+}
+
+.more {
+  color: lightgray;
 }
