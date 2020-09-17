@@ -1,7 +1,15 @@
-.header {
+.headerContainer {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 232px;
+  /* width: 92%; */
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
+  padding: 10px 20px;
+  white-space: normal;
 }
 
 .header__left {
@@ -30,8 +38,11 @@
 }
 
 .header__right {
+  /* flex: 0.2; */
   display: flex;
+  min-width: 180px;
   align-items: center;
+  margin-right: 20px;
 }
 
 .header__right > h4 {
