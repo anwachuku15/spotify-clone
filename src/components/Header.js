@@ -1,12 +1,11 @@
 import React from "react";
 import "../css/Header.css";
 import SearchIcon from "@material-ui/icons/Search";
-import { spotify } from "../spotify";
 import { Avatar } from "@material-ui/core";
 import { useStateValue } from "../StateProvider";
 
 const Header = () => {
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
 
   return (
     <div className="header">
