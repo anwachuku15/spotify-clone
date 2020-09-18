@@ -79,6 +79,20 @@
   font-size: 20px;
 }
 
+.blameSpotify {
+  font-size: 17px;
+  color: #5bf08f;
+}
+
+.blameSpotifyLink {
+  text-decoration: underline;
+}
+
+.blameSpotifyLink:hover {
+  cursor: pointer;
+  color: white;
+}
+
 .errorContainer {
   padding: 30px;
   display: flex;
