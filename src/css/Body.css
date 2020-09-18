@@ -14,7 +14,46 @@
 }
 
 .welcome {
+  color: #1ed15e;
+}
+
+.welcome,
+.message,
+.errMessage {
+  display: flex;
+  justify-content: center;
   margin: 15px;
+}
+
+.errMessage {
+  max-width: 300px;
+  font-size: 20px;
+  display: inline;
+}
+
+.errorContainer {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.errorWelcome {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.premium {
+  color: #1ed15e;
+}
+
+.refresh {
+  color: rgb(0, 157, 255);
+}
+
+.refresh:hover {
+  cursor: pointer;
+  text-decoration-line: underline;
 }
 
 .playlistInfoContainer {
