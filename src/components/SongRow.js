@@ -15,6 +15,7 @@ const SongRow = ({ track }) => {
   };
 
   const playTrack = (_track) => {
+    console.log(_track);
     spotify
       .play({
         context_uri: _track.context_uri,
@@ -28,6 +29,7 @@ const SongRow = ({ track }) => {
             song: _track.song,
             artists: _track.artists,
             cover: _track.cover,
+            duration: _track.duration,
             // volume: _track.device.volume_percent,
           },
         });
