@@ -1,9 +1,45 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
 import "../css/SongRow.css";
+import { spotify } from "../spotify";
+import { useStateValue } from "../StateProvider";
+
 const SongRow = ({ track }) => {
+  const [state, dispatch] = useStateValue();
+
+  const setIsPlaying = (isPlaying) => {
+    dispatch({
+      type: "SET_IS_PLAYING",
+      isPlaying: isPlaying,
+    });
+  };
+
+  const playTrack = (_track) => {
+    spotify
+      .play({
+        context_uri: _track.context_uri,
+        offset: { position: _track.position },
+      })
+      .then(() => {
+        dispatch({
+          type: "SET_TRACK",
+          track: {
+            context_uri: _track.context_uri,
+            song: _track.song,
+            artists: _track.artists,
+            cover: _track.cover,
+            // volume: _track.device.volume_percent,
+          },
+        });
+        setIsPlaying(true);
+      });
+  };
   return (
-    <div className="songRow">
+    <div
+      className="songRow"
+      onClick={() => console.log(track)}
+      onDoubleClick={() => playTrack(track)}
+    >
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={7}>
           <div className="songRow__title">
