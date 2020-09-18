@@ -5,9 +5,11 @@ import SongRow from "./SongRow";
 import { useStateValue } from "../StateProvider";
 import { Favorite, MoreHoriz, PlayCircleFilled } from "@material-ui/icons";
 import * as Vibrant from "node-vibrant";
+import { spotify } from "../spotify";
+import { Tooltip } from "@material-ui/core";
 
 const Body = () => {
-  const [state] = useStateValue();
+  const [state, dispatch] = useStateValue();
 
   const playlist = {
     info: state.playlistInfo,
@@ -15,6 +17,7 @@ const Body = () => {
   };
 
   const [palette, setPalette] = useState({});
+  const [currentSongTooltip, setCurrentSongTooltip] = useState();
 
   useEffect(() => {
     if (state.playlistInfo) {
@@ -47,8 +50,99 @@ const Body = () => {
     }
   };
 
+  const goToSpotify = () => {
+    window.open("https://open.spotify.com/");
+  };
+
   const refreshPage = () => {
     window.location.reload(false);
+  };
+
+  const getTrackDuration = (ms) => {
+    const min = Math.floor(ms / 60000);
+    const sec = ((ms % 60000) / 1000).toFixed(0);
+    const duration = min + ":" + (sec < 10 ? "0" : "") + sec;
+
+    return duration;
+  };
+
+  const getPlaylistDuration = (ms) => {
+    let hr = Math.floor((ms / 3600000) % 24);
+    let min = Math.floor((ms / 60000) % 60);
+
+    let duration;
+    if (hr < 1) {
+      duration = min + " min";
+    } else {
+      duration = hr + " hr " + min + " min";
+    }
+
+    return duration;
+  };
+  const playlistTooltip = (track) => {
+    const thisPlaylist = state.playlists.items.find(
+      (item) => item.uri === track.context_uri
+    );
+    setCurrentSongTooltip(`Playing from ${thisPlaylist.name}`);
+  };
+
+  const playlistButton = (track) => {
+    const thisPlaylist = state.playlists.items.find(
+      (item) => item.uri === track.context_uri
+    );
+    const id = thisPlaylist.id;
+    let playlistTracks = [];
+    let playlistInfo;
+    let playlistDuration = 0;
+    let playlistLength = -1;
+    spotify
+      .getPlaylist(id)
+      .then((playlist) => {
+        // console.log(playlist);
+        playlist.tracks.items.forEach((item) => {
+          playlistDuration += item.track.duration_ms;
+          playlistLength++;
+          playlistTracks.push({
+            playlist: playlist.name,
+            position: playlistLength,
+            context_uri: playlist.uri,
+            uri: item.track.uri,
+            song: item.track.name,
+            artists: item.track.artists,
+            album: item.track.album.name,
+            cover: item.track.album.images[0].url,
+            explicit: item.track.explicit,
+            duration: getTrackDuration(item.track.duration_ms),
+          });
+        });
+        playlistInfo = {
+          id: playlist.id,
+          uri: playlist.uri,
+          name: playlist.name,
+          owner: playlist.owner.display_name,
+          image: playlist.images[0].url,
+          description: playlist.description,
+          followers: playlist.followers.total
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+          duration: getPlaylistDuration(playlistDuration),
+        };
+
+        const playlistData = {
+          playlistInfo: playlistInfo,
+          playlistTracks: playlistTracks,
+        };
+        return playlistData;
+      })
+      .then((playlistData) => {
+        console.log(playlistData.playlistInfo);
+        dispatch({
+          type: "SET_PLAYLIST",
+          playlistInfo: playlistData.playlistInfo,
+          playlistTracks: playlistData.playlistTracks,
+        });
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -114,21 +208,48 @@ const Body = () => {
       ) : (
         <h1 className="welcome">Welcome To SpotifyClone</h1>
       )}
-      {state.playback ? (
-        <p className="message">
-          Choose a song from any of your available playlists!
-        </p>
+      {state.track ? (
+        !state.playlistInfo && (
+          <div className="welcomeMsg">
+            <p className="message">
+              Choose a song from any of your available playlists!
+            </p>
+            <p className="currentlyPlaying">Currently Playing</p>
+            {/* <Tooltip title={currentSongTooltip} placement="top-end"> */}
+            <img
+              src={state.track.cover}
+              alt=""
+              onClick={() => playlistButton(state.track)}
+              onMouseOver={() => playlistTooltip(state.track)}
+            />
+            {/* </Tooltip> */}
+            <div
+              className="currentSong"
+              onClick={() => playlistButton(state.track)}
+            >
+              <p>{state.track.song}</p>
+              <p className="artistName">
+                {state.track.artists.map((artist) => artist.name).join(", ")}
+              </p>
+            </div>
+          </div>
+        )
       ) : (
         <div className="errorContainer">
           <h1 className="errorWelcome">Uh oh!</h1>
           <h2 className="error">No available devices!</h2>
-          <p className="errMessage">
-            Make sure your <strong className="premium">Spotify Premium</strong>{" "}
-            is already playing on any of your devices and then click{" "}
-            <strong onClick={refreshPage} className="refresh">
-              refresh!
-            </strong>
-          </p>
+          <div className="errMsgContainer">
+            <p className="errMessage">
+              Make sure your{" "}
+              <strong className="premium" onClick={goToSpotify}>
+                Spotify Premium
+              </strong>{" "}
+              is already playing on any of your devices, then click{" "}
+              <strong onClick={refreshPage} className="refresh">
+                refresh!
+              </strong>
+            </p>
+          </div>
         </div>
       )}
     </div>

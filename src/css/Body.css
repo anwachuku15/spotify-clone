@@ -14,7 +14,57 @@
 }
 
 .welcome {
-  color: #1ed15e;
+  color: #1db954;
+}
+
+.welcomeMsg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.currentlyPlaying {
+  color: white;
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+
+.currentSong {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  color: white;
+}
+
+.currentSong:hover {
+  cursor: pointer;
+  /* color: #1db954 !important; */
+  transform: scale(1.1);
+  transition: 100ms transform ease-in-out;
+}
+
+.artistName {
+  color: rgb(169, 169, 169);
+}
+
+/* .artistName:hover {
+  cursor: pointer;
+  color: #62d88c !important;
+} */
+
+.welcomeMsg > img {
+  object-fit: contain;
+  width: 300px;
+  border-radius: 10px;
+}
+
+.welcomeMsg > img:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: 100ms transform ease-in-out;
+  /* width: 320px; */
 }
 
 .welcome,
@@ -25,10 +75,8 @@
   margin: 15px;
 }
 
-.errMessage {
-  max-width: 300px;
+.message {
   font-size: 20px;
-  display: inline;
 }
 
 .errorContainer {
@@ -36,6 +84,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 100px;
+}
+
+.errMessage {
+  max-width: 300px;
+  font-size: 20px;
+  /* display: inline; */
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  line-height: 30px;
+}
+
+.errMsgContainer {
+  max-width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .errorWelcome {
@@ -44,7 +111,12 @@
 }
 
 .premium {
-  color: #1ed15e;
+  color: #1db954;
+}
+
+.premium:hover {
+  cursor: pointer;
+  text-decoration-line: underline;
 }
 
 .refresh {
@@ -122,7 +194,7 @@
 .playlist__icons {
   /* position: sticky; */
   /* top: 0; */
-  color: #1ed15e;
+  color: #1db954;
   padding: 20px 20px;
   display: flex;
   /* justify-content: space-between; */
