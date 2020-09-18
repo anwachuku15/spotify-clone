@@ -56,6 +56,7 @@ function App() {
           dispatch({
             type: "SET_CURRENT_PLAYBACK",
             playback: {
+              context_uri: track.context.uri,
               song: track.item.name,
               artists: track.item.artists,
               cover: track.item.album.images[0].url,
