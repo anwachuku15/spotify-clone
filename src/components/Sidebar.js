@@ -21,20 +21,21 @@ const Sidebar = () => {
   const goToSpotify = () => {
     window.open("https://open.spotify.com/");
   };
+
   return (
     <div className="sidebar">
       <div className="navigation">
         <Tooltip title="Go To Spotify">
           <img
             className="sidebar__logo"
-            src={require("../assets/img/logos/white.png")}
+            src={require("../assets/img/logos/green.png")}
             alt=""
             onClick={goToSpotify}
           />
         </Tooltip>
         <SidebarOption Icon={Home} option="Home" handleClick={goHome} />
-        <SidebarOption Icon={Search} option="Search" />
-        <SidebarOption Icon={LibraryMusic} option="Your Library" />
+        {/* <SidebarOption Icon={Search} option="Search" />
+        <SidebarOption Icon={LibraryMusic} option="Your Library" /> */}
 
         <br />
       </div>
