@@ -35,14 +35,19 @@ const Playlists = () => {
     let playlistTracks = [];
     let playlistInfo;
     let playlistDuration = 0;
+    let playlistLength = -1;
     spotify
       .getPlaylist(id)
       .then((playlist) => {
         // console.log(playlist);
         playlist.tracks.items.forEach((item) => {
           playlistDuration += item.track.duration_ms;
+          playlistLength++;
           playlistTracks.push({
             playlist: playlist.name,
+            position: playlistLength,
+            context_uri: playlist.uri,
+            uri: item.track.uri,
             song: item.track.name,
             artists: item.track.artists,
             album: item.track.album.name,
@@ -53,6 +58,7 @@ const Playlists = () => {
         });
         playlistInfo = {
           id: playlist.id,
+          uri: playlist.uri,
           name: playlist.name,
           owner: playlist.owner.display_name,
           image: playlist.images[0].url,
