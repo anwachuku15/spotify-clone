@@ -21,6 +21,7 @@ export const reducer = (state, action) => {
         token: action.token,
       };
     case "SET_PLAYLISTS":
+      // console.log(action.playlists);
       return {
         ...state,
         playlists: action.playlists,
@@ -32,10 +33,20 @@ export const reducer = (state, action) => {
         playlistTracks: action.playlistTracks,
       };
     case "SET_CURRENT_PLAYBACK":
-      console.log(action.playback);
+      // console.log(action.playback);
       return {
         ...state,
         playback: action.playback,
+      };
+    case "SET_IS_PLAYING":
+      return {
+        ...state,
+        isPlaying: action.isPlaying,
+      };
+    case "SET_TRACK":
+      return {
+        ...state,
+        track: action.track,
       };
     default:
       return state;
