@@ -19,12 +19,16 @@ const Player = ({ spotify }) => {
     }
   };
   return (
-    <div className="player" onKeyDown={(e) => onSpacebar(e.key)} tabIndex={0}>
+    <div
+      className="player"
+      // onKeyDown={(e) => onSpacebar(e.key)}
+      // tabIndex={0}
+    >
       <div className="player__body">
         <Sidebar />
         <Body spotify={spotify} />
       </div>
-      <Footer />
+      {state.playlists && <Footer />}
     </div>
   );
 };
