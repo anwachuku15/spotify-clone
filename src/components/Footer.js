@@ -213,7 +213,11 @@ const Footer = () => {
         </div>
       ) : (
         <div className="footer__left">
-          <img src={require("../img/spotify.png")} className="songImg" alt="" />
+          <img
+            src={require("../assets/img/spotify.png")}
+            className="songImg"
+            alt=""
+          />
           <div className="footer__songInfo">
             <p className="songName">No Available Devices!</p>
             <p className="artist">Open Spotify on any device</p>
@@ -221,27 +225,28 @@ const Footer = () => {
         </div>
       )}
 
-      <div className="footer__center">
-        <div className="controls">
-          <Shuffle className="footer__green" />
-          <SkipPrevious className="footer__icon" onClick={prevSong} />
-          {state.isPlaying ? (
-            <PauseCircleOutline
-              fontSize="large"
-              className="footer__icon"
-              onClick={handlePlayPause}
-            />
-          ) : (
-            <PlayCircleOutline
-              fontSize="large"
-              className="footer__icon"
-              onClick={handlePlayPause}
-            />
-          )}
-          <SkipNext className="footer__icon" onClick={nextSong} />
-          <Repeat className="footer__green" />
-        </div>
-        {/* <div className="progress">
+      {state.track && (
+        <div className="footer__center">
+          <div className="controls">
+            <Shuffle className="footer__green" />
+            <SkipPrevious className="footer__icon" onClick={prevSong} />
+            {state.isPlaying ? (
+              <PauseCircleOutline
+                fontSize="large"
+                className="footer__icon"
+                onClick={handlePlayPause}
+              />
+            ) : (
+              <PlayCircleOutline
+                fontSize="large"
+                className="footer__icon"
+                onClick={handlePlayPause}
+              />
+            )}
+            <SkipNext className="footer__icon" onClick={nextSong} />
+            <Repeat className="footer__green" />
+          </div>
+          {/* <div className="progress">
           <p className="currentProgress">0:00</p>
           <Slider
             aria-labelledby="continuous-slider"
@@ -250,48 +255,51 @@ const Footer = () => {
           />
           <p className="duration">{state.track && state.track.duration}</p>
         </div> */}
-      </div>
-
-      <div className="footer__right">
-        <div className="rightControls">
-          <Grid container spacing={2}>
-            <Grid item>
-              <Tooltip title={currentPlaylist} placement="top">
-                <PlaylistPlay
-                  className="playlistButton"
-                  onClick={() => playlistButton(state.track)}
-                  onMouseOver={() => playlistTooltip(state.track)}
-                />
-              </Tooltip>
-            </Grid>
-            <Grid item>
-              <Tooltip title={device} placement="top">
-                <SpeakerGroupOutlined className="playlistButton" />
-              </Tooltip>
-            </Grid>
-            <Grid item>
-              {volume < 1 && <VolumeOff onClick={toggleMute} />}
-              {volume >= 1 && volume <= 5 && (
-                <VolumeMute onClick={toggleMute} />
-              )}
-              {volume > 5 && volume <= 67 && (
-                <VolumeDown onClick={toggleMute} />
-              )}
-              {volume > 67 && <VolumeUp onClick={toggleMute} />}
-            </Grid>
-            <Grid item xs>
-              <Slider
-                aria-labelledby="continuous-slider"
-                value={state.track ? volume : 0}
-                style={{
-                  width: 100,
-                }}
-                onChange={handleVolume}
-              />
-            </Grid>
-          </Grid>
         </div>
-      </div>
+      )}
+
+      {state.track && (
+        <div className="footer__right">
+          <div className="rightControls">
+            <Grid container spacing={2}>
+              <Grid item>
+                <Tooltip title={currentPlaylist} placement="top">
+                  <PlaylistPlay
+                    className="playlistButton"
+                    onClick={() => playlistButton(state.track)}
+                    onMouseOver={() => playlistTooltip(state.track)}
+                  />
+                </Tooltip>
+              </Grid>
+              <Grid item>
+                <Tooltip title={`Playing on your ${device}`} placement="top">
+                  <SpeakerGroupOutlined className="playlistButton" />
+                </Tooltip>
+              </Grid>
+              <Grid item>
+                {volume < 1 && <VolumeOff onClick={toggleMute} />}
+                {volume >= 1 && volume <= 5 && (
+                  <VolumeMute onClick={toggleMute} />
+                )}
+                {volume > 5 && volume <= 67 && (
+                  <VolumeDown onClick={toggleMute} />
+                )}
+                {volume > 67 && <VolumeUp onClick={toggleMute} />}
+              </Grid>
+              <Grid item xs>
+                <Slider
+                  aria-labelledby="continuous-slider"
+                  value={state.track ? volume : 0}
+                  style={{
+                    width: 100,
+                  }}
+                  onChange={handleVolume}
+                />
+              </Grid>
+            </Grid>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
