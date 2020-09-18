@@ -145,6 +145,12 @@ const Body = () => {
       .catch((err) => console.log(err));
   };
 
+  const blameSpotify = () => {
+    window.open(
+      "https://developer.spotify.com/documentation/web-api/reference/playlists/get-list-users-playlists/"
+    );
+  };
+
   return (
     <div
       className="body"
@@ -213,6 +219,14 @@ const Body = () => {
           <div className="welcomeMsg">
             <p className="message">
               Choose a song from any of your available playlists!
+            </p>
+            <p className="blameSpotify">
+              (If you have over 50 playlists, you won't be able to see past the
+              50th. It's not my fault!{" "}
+              <span className="blameSpotifyLink" onClick={blameSpotify}>
+                Blame Spotify!
+              </span>
+              )
             </p>
             <p className="currentlyPlaying">Currently Playing</p>
             {/* <Tooltip title={currentSongTooltip} placement="top-end"> */}
