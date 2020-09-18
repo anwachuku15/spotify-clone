@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../css/Footer.css";
 import {
   PlayCircleOutline,
+  PauseCircleOutline,
   SkipPrevious,
   SkipNext,
   Shuffle,
@@ -9,56 +10,185 @@ import {
   PlaylistPlay,
 } from "@material-ui/icons";
 import { Grid, Slider } from "@material-ui/core";
-import { VolumeDown } from "@material-ui/icons";
+import {
+  VolumeDown,
+  VolumeUp,
+  VolumeMute,
+  VolumeOff,
+} from "@material-ui/icons";
 import { useStateValue } from "../StateProvider";
+import { spotify } from "../spotify";
 
 const Footer = () => {
-  const [state] = useStateValue();
+  const [state, dispatch] = useStateValue();
+  const [spaceToggle, setSpaceToggle] = useState();
   const [volume, setVolume] = useState(0);
+  const [beforeMute, setBeforeMute] = useState();
+  const [currentTrack, setCurrentTrack] = useState(state.track);
+
+  const setIsPlaying = (isPlaying) => {
+    dispatch({
+      type: "SET_IS_PLAYING",
+      isPlaying: isPlaying,
+    });
+  };
+
+  const setTrack = (track) => {
+    dispatch({
+      type: "SET_TRACK",
+      track: {
+        context_uri: track.context.uri,
+        song: track.item.name,
+        artists: track.item.artists,
+        cover: track.item.album.images[0].url,
+        // volume: track.device.volume_percent,
+      },
+    });
+  };
 
   useEffect(() => {
-    if (state.playback) {
-      setVolume(state.playback.volume);
+    spotify.getMyCurrentPlaybackState().then((res) => {
+      setIsPlaying(res.is_playing);
+      setTrack(res);
+      setVolume(res.device.volume_percent);
+      // console.log(res.context.uri);
+    });
+  }, [spotify]);
+
+  const handlePlayPause = () => {
+    if (state.isPlaying) {
+      spotify.pause();
+      setIsPlaying(false);
+    } else {
+      spotify.play();
+      setIsPlaying(true);
     }
-  }, [state]);
+  };
 
-  // const playSong = () => {
+  const nextSong = () => {
+    spotify.skipToNext().then(() => {
+      spotify.getMyCurrentPlayingTrack().then((res) => {
+        setTrack(res);
+        setIsPlaying(true);
+      });
+    });
+  };
 
-  // }
+  const prevSong = () => {
+    spotify.skipToPrevious().then(() => {
+      spotify.getMyCurrentPlayingTrack().then((res) => {
+        setTrack(res);
+        setIsPlaying(true);
+      });
+    });
+  };
 
-  // const pauseSong = () => {
+  const handleVolume = (event, newValue) => {
+    spotify.setVolume(newValue).catch((err) => console.log(err));
+    setVolume(newValue);
+  };
 
-  // }
+  const toggleMute = () => {
+    if (volume > 0) {
+      spotify.setVolume(0).catch((err) => console.log(err));
+      setBeforeMute(volume);
+      setVolume(0);
+    } else {
+      spotify.setVolume(beforeMute).catch((err) => console.log(err));
+      setVolume(beforeMute);
+    }
+  };
 
-  // const nextSong = () => {
+  const getTrackDuration = (ms) => {
+    const min = Math.floor(ms / 60000);
+    const sec = ((ms % 60000) / 1000).toFixed(0);
+    const duration = min + ":" + (sec < 10 ? "0" : "") + sec;
 
-  // }
+    return duration;
+  };
 
-  // const prevSong = () => {
+  const getPlaylistDuration = (ms) => {
+    let hr = Math.floor((ms / 3600000) % 24);
+    let min = Math.floor((ms / 60000) % 60);
 
-  // }
+    let duration;
+    if (hr < 1) {
+      duration = min + " min";
+    } else {
+      duration = hr + " hr " + min + " min";
+    }
 
-  // const handleChangeVolume = (event, newValue) => {
-  //   spotify.setVolume(newValue)
-  // }
+    return duration;
+  };
 
-  // const volumeUp = () => {
+  const playlistButton = (track) => {
+    const thisPlaylist = state.playlists.items.find(
+      (item) => item.uri === track.context_uri
+    );
+    const id = thisPlaylist.id;
+    let playlistTracks = [];
+    let playlistInfo;
+    let playlistDuration = 0;
+    let playlistLength = -1;
+    spotify
+      .getPlaylist(id)
+      .then((playlist) => {
+        // console.log(playlist);
+        playlist.tracks.items.forEach((item) => {
+          playlistDuration += item.track.duration_ms;
+          playlistLength++;
+          playlistTracks.push({
+            playlist: playlist.name,
+            position: playlistLength,
+            context_uri: playlist.uri,
+            uri: item.track.uri,
+            song: item.track.name,
+            artists: item.track.artists,
+            album: item.track.album.name,
+            cover: item.track.album.images[0].url,
+            explicit: item.track.explicit,
+            duration: getTrackDuration(item.track.duration_ms),
+          });
+        });
+        playlistInfo = {
+          id: playlist.id,
+          uri: playlist.uri,
+          name: playlist.name,
+          owner: playlist.owner.display_name,
+          image: playlist.images[0].url,
+          description: playlist.description,
+          followers: playlist.followers.total
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+          duration: getPlaylistDuration(playlistDuration),
+        };
 
-  // }
-
-  // const volumeDown = () => {
-
-  // }
+        const playlistData = {
+          playlistInfo: playlistInfo,
+          playlistTracks: playlistTracks,
+        };
+        return playlistData;
+      })
+      .then((playlistData) => {
+        console.log(playlistData.playlistInfo);
+        dispatch({
+          type: "SELECT_PLAYLIST",
+          playlistInfo: playlistData.playlistInfo,
+          playlistTracks: playlistData.playlistTracks,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="footer">
-      {state.playback ? (
+      {state.track ? (
         <div className="footer__left">
-          <img src={state.playback.cover} className="songImg" alt="" />
+          <img src={state.track.cover} className="songImg" alt="" />
           <div className="footer__songInfo">
-            <p className="songName">{state.playback && state.playback.song}</p>
+            <p className="songName">{state.track.song}</p>
             <p className="artist">
-              {state.playback.artists.map((artist) => artist.name).join(", ")}
+              {state.track.artists.map((artist) => artist.name).join(", ")}
             </p>
           </div>
         </div>
@@ -78,9 +208,21 @@ const Footer = () => {
 
       <div className="footer__center">
         <Shuffle className="footer__green" />
-        <SkipPrevious className="footer__icon" />
-        <PlayCircleOutline fontSize="large" className="footer__icon" />
-        <SkipNext className="footer__icon" />
+        <SkipPrevious className="footer__icon" onClick={prevSong} />
+        {state.isPlaying ? (
+          <PauseCircleOutline
+            fontSize="large"
+            className="footer__icon"
+            onClick={handlePlayPause}
+          />
+        ) : (
+          <PlayCircleOutline
+            fontSize="large"
+            className="footer__icon"
+            onClick={handlePlayPause}
+          />
+        )}
+        <SkipNext className="footer__icon" onClick={nextSong} />
         <Repeat className="footer__green" />
       </div>
 
@@ -88,30 +230,28 @@ const Footer = () => {
         <div className="rightControls">
           <Grid container spacing={2}>
             <Grid item>
-              <PlaylistPlay />
+              <PlaylistPlay onClick={() => playlistButton(state.track)} />
             </Grid>
             <Grid item>
-              <VolumeDown />
+              {volume < 1 && <VolumeOff onClick={toggleMute} />}
+              {volume >= 1 && volume <= 5 && (
+                <VolumeMute onClick={toggleMute} />
+              )}
+              {volume > 5 && volume <= 67 && (
+                <VolumeDown onClick={toggleMute} />
+              )}
+              {volume > 67 && <VolumeUp onClick={toggleMute} />}
             </Grid>
             <Grid item xs>
-              {state.playback ? (
-                <Slider
-                  aria-labelledby="continuous-slider"
-                  value={volume}
-                  style={{
-                    color: "#1ed15e",
-                    width: 100,
-                  }}
-                />
-              ) : (
-                <Slider
-                  aria-labelledby="continuous-slider"
-                  style={{
-                    color: "#1ed15e",
-                    width: 100,
-                  }}
-                />
-              )}
+              <Slider
+                aria-labelledby="continuous-slider"
+                value={state.track ? volume : 0}
+                style={{
+                  color: "#1ed15e",
+                  width: 100,
+                }}
+                onChange={handleVolume}
+              />
             </Grid>
           </Grid>
         </div>
