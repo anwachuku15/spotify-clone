@@ -47,6 +47,10 @@ const Body = () => {
     }
   };
 
+  const refreshPage = () => {
+    window.location.reload(false);
+  };
+
   return (
     <div
       className="body"
@@ -54,7 +58,9 @@ const Body = () => {
         handleScroll(e);
       }}
       style={{
-        background: `linear-gradient(${palette.darkMuted}, rgba(0,0,0,1))`,
+        background: state.playlistInfo
+          ? `linear-gradient(${palette.darkMuted}, rgba(0,0,0,1))`
+          : `linear-gradient(rgb(38, 38, 38), rgba(0, 0, 0, 1))`,
       }}
     >
       {/* <Header /> */}
@@ -107,6 +113,23 @@ const Body = () => {
         </div>
       ) : (
         <h1 className="welcome">Welcome To SpotifyClone</h1>
+      )}
+      {state.playback ? (
+        <p className="message">
+          Choose a song from any of your available playlists!
+        </p>
+      ) : (
+        <div className="errorContainer">
+          <h1 className="errorWelcome">Uh oh!</h1>
+          <h2 className="error">No available devices!</h2>
+          <p className="errMessage">
+            Make sure your <strong className="premium">Spotify Premium</strong>{" "}
+            is already playing on any of your devices and then click{" "}
+            <strong onClick={refreshPage} className="refresh">
+              refresh!
+            </strong>
+          </p>
+        </div>
       )}
     </div>
   );
