@@ -26,7 +26,7 @@ export const reducer = (state, action) => {
         ...state,
         playlists: action.playlists,
       };
-    case "SELECT_PLAYLIST":
+    case "SET_PLAYLIST":
       return {
         ...state,
         playlistInfo: action.playlistInfo,
