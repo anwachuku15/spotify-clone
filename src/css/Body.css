@@ -4,7 +4,7 @@
   height: 100vh;
   color: white;
   /* background: linear-gradient(rgb(87, 115, 104), rgba(0, 0, 0, 1)); */
-  /* background: linear-gradient(rgb(38, 38, 38), rgba(0, 0, 0, 1)); */
+  background: linear-gradient(rgb(38, 38, 38), rgba(0, 0, 0, 1));
   overflow: scroll;
   /* margin-bottom: 200px; */
 }
