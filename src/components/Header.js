@@ -13,12 +13,12 @@ const Header = ({ headerStyle }) => {
     <div className="headerContainer" style={headerStyle}>
       <div className="header__left">
         <SearchIcon />
-        {/* <input
+        <input
           className="search"
           type="text"
           placeholder="Search for Artists, Songs, or Podcasts"
           style={{ borderColor: "transparent" }}
-        /> */}
+        />
       </div>
       <div className="header__right">
         <Avatar src={user?.images[0]?.url} alt="AN" />
