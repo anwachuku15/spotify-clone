@@ -100,7 +100,7 @@
 
 .footer__right * .MuiSlider-root:hover,
 .footer__center * .MuiSlider-root:hover {
-  color: #1ed15e;
+  color: #1db954;
   cursor: auto;
 }
 
@@ -159,7 +159,7 @@
 }
 
 .footer__green {
-  color: #1ed15e;
+  color: #1db954;
 }
 
 .footer__icon:hover,

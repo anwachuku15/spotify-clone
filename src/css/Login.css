@@ -1,20 +1,33 @@
 .loginContainer {
-    display: grid;
-    place-items: center;
-    height: 100vh;
-    background-color: black;
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  background-color: black;
+  /* background-color: #191414; */
 }
 
 .loginContainer > img {
-    width: 100%;
+  width: 100%;
 }
 
-.loginContainer > a {
-    padding: 20px;
-    border-radius: 99px;
-    background-color: #1db954;
-    font-weight: bold;
-    color: white;
-    /* Remove link underline */
-    text-decoration: none; 
+.button {
+  padding: 10px 25px 10px 15px;
+  border-radius: 99px;
+  background-color: #1db954;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.button > a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+.button > img {
+  object-fit: contain;
+  width: 40px;
+  margin-right: 15px;
 }
