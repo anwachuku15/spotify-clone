@@ -4,6 +4,7 @@ import SidebarOption from "./SidebarOption";
 import { useStateValue } from "../StateProvider";
 import { Home, Search, LibraryMusic } from "@material-ui/icons";
 import Playlists from "./Playlists";
+import { Tooltip } from "@material-ui/core";
 
 const Sidebar = () => {
   const [state, dispatch] = useStateValue();
@@ -17,14 +18,20 @@ const Sidebar = () => {
     });
   };
 
+  const goToSpotify = () => {
+    window.open("https://open.spotify.com/");
+  };
   return (
     <div className="sidebar">
       <div className="navigation">
-        <img
-          className="sidebar__logo"
-          src="https://getheavy.com/wp-content/uploads/2019/12/spotify2019-830x350.jpg"
-          alt=""
-        />
+        <Tooltip title="Go To Spotify">
+          <img
+            className="sidebar__logo"
+            src={require("../assets/img/logos/white.png")}
+            alt=""
+            onClick={goToSpotify}
+          />
+        </Tooltip>
         <SidebarOption Icon={Home} option="Home" handleClick={goHome} />
         <SidebarOption Icon={Search} option="Search" />
         <SidebarOption Icon={LibraryMusic} option="Your Library" />
