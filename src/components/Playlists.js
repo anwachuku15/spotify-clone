@@ -78,7 +78,7 @@ const Playlists = () => {
       .then((playlistData) => {
         console.log(playlistData.playlistInfo);
         dispatch({
-          type: "SELECT_PLAYLIST",
+          type: "SET_PLAYLIST",
           playlistInfo: playlistData.playlistInfo,
           playlistTracks: playlistData.playlistTracks,
         });
@@ -97,7 +97,6 @@ const Playlists = () => {
             justifyContent: "flex-start",
             padding: 0,
             textAlign: "start",
-            // textOverflow: "ellipsis",
           }}
         >
           <SidebarOption option={playlist.name} id={playlist.id} />
