@@ -20,7 +20,6 @@ function App() {
     const _token = hash.access_token;
     if (_token) {
       // store token in context
-      // console.log(_token);
       dispatch({
         type: "SET_TOKEN",
         token: _token,
@@ -73,6 +72,25 @@ function App() {
         .catch((err) => console.log(err));
     }
   }, [dispatch, state]);
+
+  // useEffect(() => {
+  //   let interval = null
+  //   let seconds = 0
+  //   if (isActive) {
+  //     interval = setInterval(() => {
+  //       seconds++
+  //       console.log(seconds)
+  //     }, 1000)
+  //   } else {
+  //     clearInterval(interval)
+  //   }
+
+  //   return () => clearInterval(interval)
+  // }, [isActive]);
+
+  useEffect(() => {
+    console.log(window.location.hostname);
+  });
 
   return (
     <div className="app">
