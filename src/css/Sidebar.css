@@ -1,5 +1,5 @@
 .sidebar {
-  border: 1px solid black;
+  border: 1px solid #191414;
   height: 100vh;
   flex: 0.05;
   color: white;
@@ -12,20 +12,13 @@
   /* flex-direction: column; */
 }
 
-/* .navigation {
-  min-height: 200px;
-  margin-bottom: 20px;
-} */
+.navigation > img:hover {
+  cursor: pointer;
+}
 
 .playlistsContainer {
   overflow: scroll;
 }
-
-/* .play_list {
-  overflow: scroll;
-  border-color: #fe0000;
-  border-width: 20px;
-} */
 
 hr {
   border: 1px solid #282828;
@@ -35,8 +28,9 @@ hr {
 .sidebar__logo {
   object-fit: contain;
   width: 71.5%;
-  margin-left: 3px;
-  margin-bottom: 8px;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
 }
 
 .sidebar__title {
