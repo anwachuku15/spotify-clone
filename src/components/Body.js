@@ -3,10 +3,15 @@ import "../css/Body.css";
 import Header from "./Header";
 import SongRow from "./SongRow";
 import { useStateValue } from "../StateProvider";
-import { Favorite, MoreHoriz, PlayCircleFilled } from "@material-ui/icons";
+import {
+  Favorite,
+  MoreHoriz,
+  PlayCircleFilled,
+  PauseCircleFilled,
+} from "@material-ui/icons";
 import * as Vibrant from "node-vibrant";
 import { spotify } from "../spotify";
-import { Tooltip } from "@material-ui/core";
+// import { Tooltip } from "@material-ui/core";
 
 const Body = () => {
   const [state, dispatch] = useStateValue();
@@ -17,7 +22,10 @@ const Body = () => {
   };
 
   const [palette, setPalette] = useState({});
-  const [currentSongTooltip, setCurrentSongTooltip] = useState();
+  // const [
+  //   currentSongTooltip,
+  //   setCurrentSongTooltip
+  // ] = useState();
 
   useEffect(() => {
     if (state.playlistInfo) {
@@ -79,12 +87,12 @@ const Body = () => {
 
     return duration;
   };
-  const playlistTooltip = (track) => {
-    const thisPlaylist = state.playlists.items.find(
-      (item) => item.uri === track.context_uri
-    );
-    setCurrentSongTooltip(`Playing from ${thisPlaylist.name}`);
-  };
+  // const playlistTooltip = (track) => {
+  //   const thisPlaylist = state.playlists.items.find(
+  //     (item) => item.uri === track.context_uri
+  //   );
+  //   setCurrentSongTooltip(`Playing from ${thisPlaylist.name}`);
+  // };
 
   const playlistButton = (track) => {
     const thisPlaylist = state.playlists.items.find(
@@ -145,11 +153,72 @@ const Body = () => {
       .catch((err) => console.log(err));
   };
 
-  const blameSpotify = () => {
-    window.open(
-      "https://developer.spotify.com/documentation/web-api/reference/playlists/get-list-users-playlists/"
-    );
+  const setIsPlaying = (isPlaying) => {
+    dispatch({
+      type: "SET_IS_PLAYING",
+      isPlaying: isPlaying,
+    });
   };
+
+  const setTrack = (track) => {
+    if (track) {
+      dispatch({
+        type: "SET_TRACK",
+        track: {
+          context_uri: track.context.uri,
+          uri: track.item.uri,
+          song: track.item.name,
+          artists: track.item.artists,
+          cover: track.item.album.images[0].url,
+          duration: getTrackDuration(track.item.duration_ms),
+          // volume: track.device.volume_percent,
+        },
+      });
+    }
+  };
+
+  const handlePlayPausePlaylist = () => {
+    const inPlaylist = state.playlistTracks.find(
+      (item) => item.uri === state.track.uri
+    );
+
+    if (!inPlaylist) {
+      spotify.play({ context_uri: state.playlistInfo.uri }).then(() => {
+        spotify.getMyCurrentPlayingTrack().then((res) => {
+          setTrack(res);
+          setIsPlaying(true);
+        });
+      });
+    } else {
+      if (state.isPlaying) {
+        spotify.pause();
+        setIsPlaying(false);
+      } else {
+        spotify.play();
+        setIsPlaying(true);
+      }
+    }
+  };
+
+  const [isPlaylistPlaying, setIsPlaylistPlaying] = useState(true);
+  useEffect(() => {
+    if (state.playlistTracks) {
+      const inPlaylist = state.playlistTracks.find(
+        (item) => item.uri === state.track.uri
+      );
+      if (inPlaylist) {
+        setIsPlaylistPlaying(true);
+      } else {
+        setIsPlaylistPlaying(false);
+      }
+    }
+  }, [state]);
+
+  // const blameSpotify = () => {
+  //   window.open(
+  //     "https://developer.spotify.com/documentation/web-api/reference/playlists/get-list-users-playlists/"
+  //   );
+  // };
 
   return (
     <div
@@ -200,7 +269,19 @@ const Body = () => {
           </div>
 
           <div className="playlist__icons">
-            <PlayCircleFilled fontSize="large" className="play" />
+            {state.isPlaying && isPlaylistPlaying ? (
+              <PauseCircleFilled
+                fontSize="large"
+                className="play"
+                onClick={handlePlayPausePlaylist}
+              />
+            ) : (
+              <PlayCircleFilled
+                fontSize="large"
+                className="play"
+                onClick={handlePlayPausePlaylist}
+              />
+            )}
             <Favorite fontSize="large" className="favorite" />
             <MoreHoriz fontSize="large" className="more" />
           </div>
@@ -218,23 +299,23 @@ const Body = () => {
         !state.playlistInfo && (
           <div className="welcomeMsg">
             <p className="message">
-              Choose a song from any of your available playlists!
+              Choose a song from up to 50 of your playlists!
             </p>
-            <p className="blameSpotify">
+            {/* <p className="blameSpotify">
               (If you have over 50 playlists, you won't be able to see past the
               50th. It's not my fault!{" "}
               <span className="blameSpotifyLink" onClick={blameSpotify}>
                 Blame Spotify!
               </span>
               )
-            </p>
+            </p> */}
             <p className="currentlyPlaying">Currently Playing</p>
             {/* <Tooltip title={currentSongTooltip} placement="top-end"> */}
             <img
               src={state.track.cover}
               alt=""
               onClick={() => playlistButton(state.track)}
-              onMouseOver={() => playlistTooltip(state.track)}
+              // onMouseOver={() => playlistTooltip(state.track)}
             />
             {/* </Tooltip> */}
             <div
