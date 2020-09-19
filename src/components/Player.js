@@ -13,11 +13,11 @@ const Player = ({ spotify }) => {
   //   tracks: state.playlistTracks,
   // };
 
-  const onSpacebar = (key) => {
-    if (key === " ") {
-      console.log(state.isPlaying);
-    }
-  };
+  // const onSpacebar = (key) => {
+  //   if (key === " ") {
+  //     console.log(state.isPlaying);
+  //   }
+  // };
   return (
     <div
       className="player"
