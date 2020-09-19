@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/Footer.css";
 import {
   PlayCircleOutline,
@@ -22,12 +22,13 @@ import { spotify } from "../spotify";
 
 const Footer = () => {
   const [state, dispatch] = useStateValue();
-  const [spaceToggle, setSpaceToggle] = useState();
+  // const [spaceToggle, setSpaceToggle] = useState();
   const [volume, setVolume] = useState(0);
   const [beforeMute, setBeforeMute] = useState();
-  const [currentTrack, setCurrentTrack] = useState(state.track);
+  // const [currentTrack, setCurrentTrack] = useState(state.track);
   const [currentPlaylist, setCurrentPlaylist] = useState();
   const [device, setDevice] = useState();
+  // const [isDisabled, setIsDisabled] = useState()
 
   const getTrackDuration = (ms) => {
     const min = Math.floor(ms / 60000);
@@ -64,6 +65,7 @@ const Footer = () => {
         type: "SET_TRACK",
         track: {
           context_uri: track.context.uri,
+          uri: track.item.uri,
           song: track.item.name,
           artists: track.item.artists,
           cover: track.item.album.images[0].url,
@@ -278,13 +280,13 @@ const Footer = () => {
               </Grid>
               <Grid item>
                 {volume < 1 && <VolumeOff onClick={toggleMute} />}
-                {volume >= 1 && volume <= 5 && (
+                {volume >= 1 && volume <= 15 && (
                   <VolumeMute onClick={toggleMute} />
                 )}
-                {volume > 5 && volume <= 67 && (
+                {volume > 15 && volume <= 60 && (
                   <VolumeDown onClick={toggleMute} />
                 )}
-                {volume > 67 && <VolumeUp onClick={toggleMute} />}
+                {volume > 60 && <VolumeUp onClick={toggleMute} />}
               </Grid>
               <Grid item xs>
                 <Slider
