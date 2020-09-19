@@ -14,7 +14,7 @@
 }
 
 .welcome {
-  color: #1db954;
+  /* color: #1db954; */
 }
 
 .welcomeMsg {
@@ -58,13 +58,13 @@
   object-fit: contain;
   width: 300px;
   border-radius: 10px;
+  margin: 10px;
 }
 
 .welcomeMsg > img:hover {
   cursor: pointer;
   transform: scale(1.1);
   transition: 100ms transform ease-in-out;
-  /* width: 320px; */
 }
 
 .welcome,
@@ -77,6 +77,7 @@
 
 .message {
   font-size: 20px;
+  color: #5bf08f;
 }
 
 .blameSpotify {
@@ -125,7 +126,7 @@
 }
 
 .premium {
-  color: #1db954;
+  color: #57ff92;
 }
 
 .premium:hover {
@@ -134,7 +135,7 @@
 }
 
 .refresh {
-  color: rgb(0, 157, 255);
+  color: rgb(30, 195, 255);
 }
 
 .refresh:hover {
@@ -221,6 +222,7 @@
 
 .play {
   font-size: 70px !important;
+  background: radial-gradient(white 50%, transparent 50%);
 }
 
 .play:hover {
