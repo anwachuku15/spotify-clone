@@ -88,9 +88,9 @@ function App() {
   //   return () => clearInterval(interval)
   // }, [isActive]);
 
-  useEffect(() => {
-    console.log(window.location.hostname);
-  });
+  // useEffect(() => {
+  //   console.log(window.location.hostname);
+  // });
 
   return (
     <div className="app">
