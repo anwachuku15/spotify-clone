@@ -2,7 +2,11 @@ import React from "react";
 import "../css/Sidebar.css";
 import SidebarOption from "./SidebarOption";
 import { useStateValue } from "../StateProvider";
-import { Home, Search, LibraryMusic } from "@material-ui/icons";
+import {
+  Home,
+  // Search,
+  // LibraryMusic
+} from "@material-ui/icons";
 import Playlists from "./Playlists";
 import { Tooltip } from "@material-ui/core";
 
