@@ -13,15 +13,27 @@
 
 .songRow__title {
   display: flex;
+  align-items: center;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.songRow__title > img {
+.albumArt {
   width: 40px;
   height: 40px;
   min-width: 40px;
   min-height: 40px;
+  margin-right: 20px;
+}
+
+.rowNumber {
+  display: flex;
+  margin-right: 20px;
+}
+
+.rowNumberActive {
+  color: #1db954;
+  display: flex;
   margin-right: 20px;
 }
 
