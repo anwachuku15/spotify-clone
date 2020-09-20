@@ -76,7 +76,7 @@ const Playlists = () => {
         return playlistData;
       })
       .then((playlistData) => {
-        console.log(playlistData.playlistInfo);
+        // console.log(playlistData.playlistInfo);
         dispatch({
           type: "SET_PLAYLIST",
           playlistInfo: playlistData.playlistInfo,
