@@ -13,10 +13,10 @@
 }
 
 .header__left {
-  flex: 0.5;
-  background-color: white;
-  color: gray;
-  border-radius: 30px;
+  flex: 1;
+  /* background-color: white; */
+  /* color: gray; */
+  /* border-radius: 30px; */
   display: flex;
   align-items: center;
   padding: 6px 48px 6px 10px;
@@ -24,6 +24,30 @@
   width: 268px;
   min-width: 60px;
   margin-right: 10px;
+}
+
+.leftControls {
+}
+
+.playlistHeader {
+  display: flex;
+  align-items: center;
+}
+
+.playlistNameHeader {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.headerPlay {
+  color: #1db954;
+  font-size: 45px !important;
+  background: radial-gradient(white 50%, transparent 50%);
+  margin-right: 20px;
+}
+
+.arrows {
+  margin-right: 50px;
 }
 
 .search {
