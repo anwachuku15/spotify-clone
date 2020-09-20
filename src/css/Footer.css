@@ -159,7 +159,8 @@
 }
 
 .footer__green {
-  color: #1db954;
+  /* color: #1db954; */
+  color: transparent;
 }
 
 .footer__icon:hover,
