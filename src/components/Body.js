@@ -47,14 +47,16 @@ const Body = () => {
     backgroundColor: "transparent",
   };
   const [headerStyle, setHeaderStyle] = useState({ _headerStyle });
-
+  const [playButton, setPlayButton] = useState();
   const handleScroll = (e) => {
     if (e.target.scrollTop <= 299) {
       setHeaderStyle(_headerStyle);
+      setPlayButton(false);
     } else {
       setHeaderStyle({
         backgroundColor: palette.darkMuted,
       });
+      setPlayButton(true);
     }
   };
 
@@ -178,11 +180,7 @@ const Body = () => {
   };
 
   const handlePlayPausePlaylist = () => {
-    const inPlaylist = state.playlistTracks.find(
-      (item) => item.uri === state.track.uri
-    );
-
-    if (!inPlaylist) {
+    if (state.playlistInfo.uri !== state.track.context_uri) {
       spotify.play({ context_uri: state.playlistInfo.uri }).then(() => {
         spotify.getMyCurrentPlayingTrack().then((res) => {
           setTrack(res);
@@ -202,15 +200,14 @@ const Body = () => {
 
   const [isPlaylistPlaying, setIsPlaylistPlaying] = useState(true);
   useEffect(() => {
-    if (state.playlistTracks) {
-      const inPlaylist = state.playlistTracks.find(
-        (item) => item.uri === state.track.uri
-      );
-      if (inPlaylist) {
+    if (state.playlistInfo && state.track.context_uri) {
+      if (state.playlistInfo.uri === state.track.context_uri) {
         setIsPlaylistPlaying(true);
       } else {
         setIsPlaylistPlaying(false);
       }
+      console.log("Track Context: ", state.track.context_uri);
+      console.log("Playlist: ", state.playlistInfo.uri);
     }
   }, [state]);
 
@@ -241,7 +238,7 @@ const Body = () => {
               background: `linear-gradient(${palette.vibrant}, ${palette.darkMuted})`,
             }}
           >
-            <Header headerStyle={headerStyle} />
+            <Header headerStyle={headerStyle} playButton={playButton} />
 
             <div className="playlistInfoContainer">
               {playlist.info.image ? (
