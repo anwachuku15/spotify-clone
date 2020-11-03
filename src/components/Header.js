@@ -81,21 +81,6 @@ const Header = ({ headerStyle, playButton }) => {
   return (
     <div className="headerContainer" style={headerStyle}>
       <div className="header__left">
-        {/* <SearchIcon />
-        <input
-          className="search"
-          type="text"
-          placeholder="Search for Artists, Songs, or Podcasts"
-          style={{ borderColor: "transparent" }}
-        /> */}
-        {/* <div className="leftControls">
-          <Fab size="small" className="arrows">
-            <ArrowBackIosIcon htmlColor="white" />
-          </Fab>
-          <Fab size="small" className="arrows">
-            <ArrowForwardIosIcon htmlColor="white" />
-          </Fab>
-        </div> */}
         {playButton && (
           <div className="playlistHeader">
             {state.isPlaying && isPlaylistPlaying ? (
